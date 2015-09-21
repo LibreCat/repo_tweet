@@ -1,0 +1,35 @@
+url_template: http://hdl.handle.net/2013/ULB-DIPOT:%s
+tweet_limit: 15
+twitter_credentials:
+  consumer_key: CHANGEME
+  consumer_secret: CHANGEME
+  access_token: CHANGEME
+  access_token_secret: CHANGEME
+importer:
+  csv:
+    package: CSV
+    options:
+      fields: _id,title
+      header: 1
+      #file:
+  oai:
+    package: OAI
+    options:
+      url: "http://difusion-oai.ulb.ac.be/oai/request"
+      #set:
+      #from:
+      #until:
+store:
+  tweet_log:
+    package: DBI
+    options:
+      data_source: "dbi:SQLite:dbname=tweet_log.db"
+      username: ""
+      password: ""
+exporter:
+  tweet_log:
+    package: CSV
+    options:
+      fields: _id,timestamp,tweet
+      header: 1
+
