@@ -1,4 +1,3 @@
-url_template: http://hdl.handle.net/2013/ULB-DIPOT:%s
 tweet_limit: 15
 twitter_credentials:
   consumer_key: CHANGEME
@@ -9,16 +8,28 @@ importer:
   csv:
     package: CSV
     options:
-      fields: _id,title
+      fields: _id,title,url
       header: 1
       #file:
   oai:
     package: OAI
     options:
       url: "http://difusion-oai.ulb.ac.be/oai/request"
+      metadataPrefix: oai_dc
       #set:
       #from:
       #until:
+fixer:
+  oai_dc:
+    - "move_field(title.0,title)"
+    - "set_array(url,http://hdl.handle.net/2013/ULB-DIPOT:)"
+    - "copy_field(_id,url.$append)"
+    - "join_field(url,'')"
+  marcxml:
+    - "marc_map(245a,title)"
+    - "set_array(url,'http://myserver.edu/record/')"
+    - "copy_field(_id,url.$append)"
+    - "join_field(url,'')"
 store:
   tweet_log:
     package: DBI

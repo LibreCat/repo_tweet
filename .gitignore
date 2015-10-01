@@ -1,2 +1,4 @@
 *.db
 *.swp
+cpanfile.snapshot
+local
